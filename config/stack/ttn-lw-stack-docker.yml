@@ -1,0 +1,129 @@
+# Identity Server configuration
+# Email configuration for "10.0.2.15"
+is:
+  email:
+    sender-name: 'The Things Stack'
+    sender-address: 'noreply@10.0.2.15'
+    network:
+      name: 'The Things Stack'
+      console-url: 'https://10.0.2.15/console'
+      identity-server-url: 'https://10.0.2.15/oauth'
+
+    # If sending email with Sendgrid
+    # provider: sendgrid
+    # sendgrid:
+    #   api-key: '...'              # enter Sendgrid API key
+
+    # If sending email with SMTP
+    # provider: smtp
+    # smtp:
+    #   address:  '...'             # enter SMTP server address
+    #   username: '...'             # enter SMTP server username
+    #   password: '...'             # enter SMTP server password
+
+  # Web UI configuration for "10.0.2.15":
+  oauth:
+    ui:
+      canonical-url: 'https://10.0.2.15/oauth'
+      is:
+        base-url: 'https://10.0.2.15/api/v3'
+
+# HTTP server configuration
+http:
+  cookie:
+    block-key: '4770b6e4d8723ad34b321c955b58a211a218301771b525d8367d2bd14de5957c'                # generate 32 bytes (openssl rand -hex 32)
+    hash-key: 'cc6fa363148607c4d3aaca89570861df7b4796f5b58247a8b978467db98ffa367de46ab64f38010791112734f5d60584a968b18e5678e1f7ef36e484d1eee618'                 # generate 64 bytes (openssl rand -hex 64)
+  metrics:
+    password: 'ttslw2021'               # choose a password
+  pprof:
+    password: 'ttslw2021'                 # choose a password
+
+# If using custom certificates:
+tls:
+  source: file
+  root-ca: /run/secrets/ca.pem
+  certificate: /run/secrets/cert.pem
+  key: /run/secrets/key.pem
+
+# Let's encrypt for "10.0.2.15"
+# tls:
+#   source: 'acme'
+#   acme:
+#     dir: '/var/lib/acme'
+#     email: 'you@10.0.2.15'
+#     hosts: ['10.0.2.15']
+#     default-host: '10.0.2.15'
+
+# If Gateway Server enabled, defaults for "10.0.2.15":
+gs:
+  mqtt:
+    public-address: '10.0.2.15:1882'
+    public-tls-address: '10.0.2.15:8882'
+  mqtt-v2:
+    public-address: '10.0.2.15:1881'
+    public-tls-address: '10.0.2.15:8881'
+
+# If Gateway Configuration Server enabled, defaults for "10.0.2.15":
+gcs:
+  basic-station:
+    default:
+      lns-uri: 'wss://10.0.2.15:8887'
+  the-things-gateway:
+    default:
+      mqtt-server: 'mqtts://10.0.2.15:8881'
+
+# Web UI configuration for "10.0.2.15":
+console:
+  ui:
+    canonical-url: 'https://10.0.2.15/console'
+    is:
+      base-url: 'https://10.0.2.15/api/v3'
+    gs:
+      base-url: 'https://10.0.2.15/api/v3'
+    gcs:
+      base-url: 'https://10.0.2.15/api/v3'
+    ns:
+      base-url: 'https://10.0.2.15/api/v3'
+    as:
+      base-url: 'https://10.0.2.15/api/v3'
+    js:
+      base-url: 'https://10.0.2.15/api/v3'
+    qrg:
+      base-url: 'https://10.0.2.15/api/v3'
+    edtc:
+      base-url: 'https://10.0.2.15/api/v3'
+
+  oauth:
+    authorize-url: 'https://10.0.2.15/oauth/authorize'
+    token-url: 'https://10.0.2.15/oauth/token'
+    logout-url: 'https://10.0.2.15/oauth/logout'
+    client-id: 'console'
+    client-secret: 'console'          # choose or generate a secret
+
+# If Application Server enabled, defaults for "10.0.2.15":
+as:
+  mqtt:
+    public-address: '10.0.2.15:1883'
+    public-tls-address: '10.0.2.15:8883'
+  webhooks:
+    downlink:
+      public-address: '10.0.2.15:1885/api/v3'
+
+# If Device Claiming Server enabled, defaults for "10.0.2.15":
+dcs:
+  oauth:
+    authorize-url: 'https://10.0.2.15/oauth/authorize'
+    token-url: 'https://10.0.2.15/oauth/token'
+    logout-url: 'https://10.0.2.15/oauth/logout'
+    client-id: 'device-claiming'
+    client-secret: 'device-claiming'          # choose or generate a secret
+  ui:
+    canonical-url: 'https://10.0.2.15/claim'
+    as:
+      base-url: 'https://10.0.2.15/api/v3'
+    dcs:
+      base-url: 'https://10.0.2.15/api/v3'
+    is:
+      base-url: 'https://10.0.2.15/api/v3'
+    ns:
+      base-url: 'https://10.0.2.15/api/v3'
